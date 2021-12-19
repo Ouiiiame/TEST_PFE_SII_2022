@@ -1,5 +1,7 @@
 package sii.maroc;
 
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Assert;
 import org.junit.Test;
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -30,9 +32,18 @@ public class RestaurantTest {
      * write a test to ensure that when a recipe require out of stocks ingredients we receive an UnavailableDishException (unchecked)
      */
 // Allowed modification zone starts here
-    @Test
-    public void shouldFailWhenOutOfStock(){
-        Assert.fail();
+    @Test(expected = RuntimeException.class)
+    public void shouldFailWhenOutOfStock(){   
+    	boolean thrown = false; 
+    	
+    	try {
+    		Restaurant restaurant = new Restaurant("0 balls Mozzarella", "0 tomatoes", "olive oil", "pepper");
+            Ticket ticket = restaurant.order("1 Tomato Mozzarella Salad");
+    	} catch (RuntimeException e) {
+    		System.out.println("UnavailableDishException");
+            thrown = true; 
+    	}
+    	assertTrue(thrown);
     }
 // Allowed modification zone ends here
 
